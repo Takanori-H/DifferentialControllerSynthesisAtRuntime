@@ -1,0 +1,51 @@
+Process:
+	GOAL0
+States:
+	10
+Transitions:
+	GOAL0 = Q0,
+	Q0	= ([0].{arriveInduction, arrivePicking, arriveShipping}[0] -> ERROR
+		  |{[0].{move.{e, s, w}, put}, reset} -> Q0
+		  |[0].arrive[0][1] -> Q1
+		  |[0].pick -> Q2),
+	Q1	= ([0].{arriveInduction, arrivePicking, arriveShipping}[0] -> ERROR
+		  |reset -> Q0
+		  |[0].{arrive[0][1], move.{e, s, w}, put} -> Q1
+		  |[0].pick -> Q3),
+	Q2	= ([0].{arriveInduction, arrivePicking, arriveShipping}[0] -> ERROR
+		  |{[0].put, reset} -> Q0
+		  |[0].{move.{e, s, w}, pick} -> Q2
+		  |[0].arrive[0][1] -> Q3),
+	Q3	= ([0].{arrivePicking, arriveShipping}[0] -> ERROR
+		  |reset -> Q0
+		  |[0].put -> Q1
+		  |[0].{arrive[0][1], move.{e, s, w}, pick} -> Q3
+		  |[0].arriveInduction[0] -> Q4),
+	Q4	= ([0].{arriveShipping[0], put} -> ERROR
+		  |reset -> Q0
+		  |[0].{arrive[0][1], arriveInduction[0], move.{s, w}, pick} -> Q4
+		  |[0].move.e -> Q5
+		  |[0].arrivePicking[0] -> Q6),
+	Q5	= ([0].arriveShipping[0] -> ERROR
+		  |reset -> Q0
+		  |[0].arriveInduction[0] -> Q4
+		  |[0].{arrive[0][1], move.{e, s, w}, pick} -> Q5
+		  |[0].put -> Q7
+		  |[0].arrivePicking[0] -> Q8),
+	Q6	= ([0].put -> ERROR
+		  |reset -> Q0
+		  |[0].{arrive[0][1], {arriveInduction, arrivePicking, arriveShipping}[0], move.{s, w}, pick} -> Q6
+		  |[0].move.e -> Q8),
+	Q7	= ([0].{arriveInduction, arriveShipping}[0] -> ERROR
+		  |reset -> Q0
+		  |[0].pick -> Q5
+		  |[0].{arrive[0][1], move.{e, s, w}, put} -> Q7
+		  |[0].arrivePicking[0] -> Q9),
+	Q8	= (reset -> Q0
+		  |[0].arriveInduction[0] -> Q6
+		  |[0].{arrive[0][1], {arrivePicking, arriveShipping}[0], move.{e, s, w}, pick} -> Q8
+		  |[0].put -> Q9),
+	Q9	= ([0].arriveInduction[0] -> ERROR
+		  |reset -> Q0
+		  |[0].pick -> Q8
+		  |[0].{arrive[0][1], {arrivePicking, arriveShipping}[0], move.{e, s, w}, put} -> Q9).

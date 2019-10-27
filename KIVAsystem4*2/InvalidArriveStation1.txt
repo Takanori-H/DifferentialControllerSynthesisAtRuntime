@@ -1,0 +1,8 @@
+Process:
+	InvalidArriveStation1
+States:
+	1
+Transitions:
+	InvalidArriveStation1 = Q0,
+	Q0	= ([1].{arriveInduction[0..1], {arrivePicking, arriveReplenish}.{[0], [2..3]}, arriveShipping[0..1]} -> ERROR
+		  |{[1].arrive[0..3][0..1], reset} -> Q0).

@@ -1,0 +1,19 @@
+Process:
+	Handle0
+States:
+	4
+Transitions:
+	Handle0 = Q0,
+	Q0	= ([0].put -> ERROR
+		  |{[0].move.{e, n, s, w}, reset} -> Q0
+		  |[0].pick -> Q1
+		  |[0].arrive[0][1] -> Q2),
+	Q1	= ([0].{pick, put} -> ERROR
+		  |reset -> Q0
+		  |[0].move.{e, n, s, w} -> Q1
+		  |[0].arrive[0][1] -> Q3),
+	Q2	= ({[0].{arrive[0][1], move.{e, n, s, w}, put}, reset} -> ERROR
+		  |[0].pick -> Q3),
+	Q3	= ({[0].{pick, put}, reset} -> ERROR
+		  |[0].move.{e, n, s, w} -> Q1
+		  |[0].arrive[0][1] -> Q3).

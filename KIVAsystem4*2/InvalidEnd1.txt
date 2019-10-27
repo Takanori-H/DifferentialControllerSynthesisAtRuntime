@@ -1,0 +1,36 @@
+Process:
+	InvalidEnd1
+States:
+	8
+Transitions:
+	InvalidEnd1 = Q0,
+	Q0	= ({[1].move.s, reset} -> Q0
+		  |end -> Q1
+		  |[1].arrivePicking[1] -> Q2
+		  |start -> Q3),
+	Q1	= (reset -> Q0
+		  |{[1].move.s, end} -> Q1
+		  |[1].arrivePicking[1] -> Q4
+		  |start -> Q5),
+	Q2	= ({[1].move.s, reset} -> Q0
+		  |[1].arrivePicking[1] -> Q2
+		  |end -> Q4
+		  |start -> Q6),
+	Q3	= (end -> ERROR
+		  |[1].arrivePicking[1] -> Q2
+		  |{[1].move.s, {reset, start}} -> Q3),
+	Q4	= (reset -> Q0
+		  |[1].move.s -> Q1
+		  |{[1].arrivePicking[1], end} -> Q4
+		  |start -> Q7),
+	Q5	= ({[1].move.s, {end, start}} -> ERROR
+		  |reset -> Q3
+		  |[1].arrivePicking[1] -> Q4),
+	Q6	= ([1].arrivePicking[1] -> Q2
+		  |{[1].move.s, reset} -> Q3
+		  |end -> Q4
+		  |start -> Q6),
+	Q7	= ([1].move.s -> ERROR
+		  |reset -> Q3
+		  |{[1].arrivePicking[1], end} -> Q4
+		  |start -> Q7).

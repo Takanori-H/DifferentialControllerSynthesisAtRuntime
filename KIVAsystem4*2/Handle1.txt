@@ -1,0 +1,19 @@
+Process:
+	Handle1
+States:
+	4
+Transitions:
+	Handle1 = Q0,
+	Q0	= ([1].put -> ERROR
+		  |{[1].move.{e, n, s, w}, reset} -> Q0
+		  |[1].pick -> Q1
+		  |[1].arrive[1][1] -> Q2),
+	Q1	= ([1].{pick, put} -> ERROR
+		  |reset -> Q0
+		  |[1].move.{e, n, s, w} -> Q1
+		  |[1].arrive[1][1] -> Q3),
+	Q2	= ({[1].{arrive[1][1], move.{e, n, s, w}, put}, reset} -> ERROR
+		  |[1].pick -> Q3),
+	Q3	= ({[1].{pick, put}, reset} -> ERROR
+		  |[1].move.{e, n, s, w} -> Q1
+		  |[1].arrive[1][1] -> Q3).

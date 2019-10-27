@@ -1,0 +1,36 @@
+Process:
+	InvalidEnd0
+States:
+	8
+Transitions:
+	InvalidEnd0 = Q0,
+	Q0	= ({[0].move.w, reset} -> Q0
+		  |end -> Q1
+		  |[0].arriveShipping[0] -> Q2
+		  |start -> Q3),
+	Q1	= (reset -> Q0
+		  |{[0].move.w, end} -> Q1
+		  |[0].arriveShipping[0] -> Q4
+		  |start -> Q5),
+	Q2	= ({[0].move.w, reset} -> Q0
+		  |[0].arriveShipping[0] -> Q2
+		  |end -> Q4
+		  |start -> Q6),
+	Q3	= (end -> ERROR
+		  |[0].arriveShipping[0] -> Q2
+		  |{[0].move.w, {reset, start}} -> Q3),
+	Q4	= (reset -> Q0
+		  |[0].move.w -> Q1
+		  |{[0].arriveShipping[0], end} -> Q4
+		  |start -> Q7),
+	Q5	= ({[0].move.w, {end, start}} -> ERROR
+		  |reset -> Q3
+		  |[0].arriveShipping[0] -> Q4),
+	Q6	= ([0].arriveShipping[0] -> Q2
+		  |{[0].move.w, reset} -> Q3
+		  |end -> Q4
+		  |start -> Q6),
+	Q7	= ([0].move.w -> ERROR
+		  |reset -> Q3
+		  |{[0].arriveShipping[0], end} -> Q4
+		  |start -> Q7).

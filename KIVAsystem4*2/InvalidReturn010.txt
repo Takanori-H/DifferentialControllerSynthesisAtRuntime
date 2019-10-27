@@ -1,0 +1,14 @@
+Process:
+	InvalidReturn010
+States:
+	3
+Transitions:
+	InvalidReturn010 = Q0,
+	Q0	= ([0].{arriveInduction[0..1], {arrivePicking, arriveReplenish}[0..3], arriveShipping[0..1], move.{e, n, s, w}} -> Q0
+		  |[0].arrive[1][0] -> Q1),
+	Q1	= ([0].arrive[1][0] -> ERROR
+		  |[0].{arriveInduction[0..1], {arrivePicking, arriveReplenish}[0..3], arriveShipping[0..1]} -> Q1
+		  |[0].move.{e, n, s, w} -> Q2),
+	Q2	= ([0].arrive[1][0] -> ERROR
+		  |[0].{arriveInduction[0..1], {arrivePicking, arriveReplenish}[0..3], arriveShipping[0..1]} -> Q0
+		  |[0].move.{e, n, s, w} -> Q2).
