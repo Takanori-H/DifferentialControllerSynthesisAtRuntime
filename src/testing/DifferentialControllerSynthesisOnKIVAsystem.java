@@ -162,7 +162,7 @@ public class DifferentialControllerSynthesisOnKIVAsystem
 	int doJointTest(String[] cases)
 	{
 		int tmp = -1;
-		dt=new DirectoryTrackerForSingleWinningRegion("KIVAsystem4*2");
+		dt=new DirectoryTrackerForSingleWinningRegion("KIVAsystem");
 		int DesignTime[][] = dt.checkDesignTimeSynthesis();
 		for(int i=DesignTime.length;i>0;i--)
 		{
